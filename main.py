@@ -13,15 +13,7 @@ from random import randint
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 
-# from tensorflow.keras import Sequential, Input
-# from tensorflow.keras.layers import Dense, Dropout
-# from tensorflow.keras.layers import Conv2D, Flatten
 # from tensorflow.keras.callbacks import EarlyStopping
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator as IDG
-
-
-# from tensorflow.keras import models
-# from tensorflow.keras import layers
 # from tensorflow.keras import optimizers
 
 # Data preprocessing - Here the main processing of data happens
