@@ -64,3 +64,33 @@ sm = SMOTE(random_state=42)
 train_data, train_labels = sm.fit_resample(train_data.reshape(-1, IMG_SIZE * IMG_SIZE * 3), train_labels)
 train_data = train_data.reshape(-1, IMG_SIZE, IMG_SIZE, 3)
 
+# Model Design - CNN
+
+pooling = tkr.layers.MaxPooling2D(2, 2)
+fine_dropout = tkr.layers.Dropout(0.1)
+coarse_dropout = tkr.layers.Dropout(0.5)
+flat_them_layers = tkr.layers.Flatten()
+
+layer1 = tkr.layers.Conv2D(16, (3, 3), activation = 'relu', padding = 'same', input_shape = (176,176,3))
+layer2 = tkr.layers.Conv2D(32, (3, 3), activation = 'relu', padding = 'same')
+layer3 = tkr.layers.Conv2D(64, (3, 3), activation = 'relu', padding = 'same')
+layer4 = tkr.layers.Conv2D(128, (3, 3), activation = 'relu', padding = 'same')
+out_layer = tkr.layers.Dense(units = 4, activation = 'softmax')
+
+model = tkr.models.Sequential()
+model.add(layer1)
+model.add(pooling)
+model.add(fine_dropout)
+model.add(layer2)
+model.add(pooling)
+model.add(fine_dropout)
+model.add(layer3)
+model.add(pooling)
+model.add(fine_dropout)
+model.add(layer4)
+model.add(pooling)
+model.add(coarse_dropout)
+model.add(flat_them_layers)
+model.add(out_layer)
+
+print('done with no errors')
