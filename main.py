@@ -1,20 +1,11 @@
-import numpy as np
-import pandas as pd
 import tensorflow as tf
 import matplotlib.pyplot as plt
-import seaborn as sns
 import os as os
-import keras
-from tensorflow import keras as tkr
 
+from tensorflow import keras as tkr
 from distutils.dir_util import copy_tree, remove_tree
-from PIL import Image
-from random import randint
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
-
-# from tensorflow.keras.callbacks import EarlyStopping
-# from tensorflow.keras import optimizers
 
 # Data preprocessing - Here the main processing of data happens
 
@@ -85,4 +76,50 @@ model.add(coarse_dropout)
 model.add(flat_them_layers)
 model.add(out_layer)
 
-print('done with no errors')
+model.compile(optimizer='adam', loss = "categorical_crossentropy" , metrics=['acc'])
+
+# Extra model parameters/auxiliary functions
+
+
+def scheduler(epoch, lr):
+    """
+    Scheduler function for early stopping. If the performance does not
+    increase for 10 epochs, the model stops, to avoid running indefinitely
+    or for unneeded time.
+    """
+    if epoch < 10:
+        return lr
+    else:
+        return lr * tf.math.exp(-0.1)
+
+
+EarlyStopping = tkr.callbacks.EarlyStopping(monitor='loss', patience=3)
+LearningRateScheduler = tkr.callbacks.LearningRateScheduler(scheduler)
+
+# Model Training - In here, the model is trained and validated with both the train and validation datasets
+
+history = model.fit(train_data, train_labels, validation_data=(val_data, val_labels), epochs=100, callbacks=[EarlyStopping])
+
+# Model Metrics - Graphs on the model behaviour during it's training are presented here
+
+acc = history.history['acc']
+val_acc = history.history['val_acc']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+epochs = range(1, len(acc) + 1)
+
+plt.plot(epochs, acc, 'bo', label = 'Training acc')
+plt.plot(epochs, val_acc, 'b', label = 'Validation acc')
+plt.title('Training and Validation accuracy')
+plt.legend()
+plt.figure()
+plt.plot(epochs, loss, 'bo', label='Training loss')
+plt.plot(epochs, val_loss, 'b', label= 'validation loss')
+plt.title('Training and Validation loss')
+plt.legend()
+
+plt.show()
+
+# Model evaluation - Here the model is evaluated with the test dataset
+
+model.evaluate(test_data,test_labels)
