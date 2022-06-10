@@ -25,7 +25,7 @@ copy_tree(test_dir, work_dir)
 WORK_DIR = './dataset/'
 CLASSES = ['NonDemented', 'VeryMildDemented', 'MildDemented', 'ModerateDemented']
 IMG_SIZE = 176
-IMAGE_SIZE = [176, 176]
+IMAGE_SIZE = [IMG_SIZE, IMG_SIZE]
 DIM = (IMG_SIZE, IMG_SIZE)
 ZOOM = [.99, 1.01]
 BRIGHT_RANGE = [0.8, 1.2]
@@ -66,7 +66,7 @@ fine_dropout = tkr.layers.Dropout(0.1)
 coarse_dropout = tkr.layers.Dropout(0.5)
 flat_them_layers = tkr.layers.Flatten()
 
-layer1 = tkr.layers.Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(176, 176, 3))
+layer1 = tkr.layers.Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(IMG_SIZE, IMG_SIZE, 3))
 layer2 = tkr.layers.Conv2D(32, (3, 3), activation='relu', padding='same')
 layer3 = tkr.layers.Conv2D(64, (3, 3), activation='relu', padding='same')
 layer4 = tkr.layers.Conv2D(128, (3, 3), activation='relu', padding='same')
