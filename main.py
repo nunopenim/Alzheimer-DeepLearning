@@ -7,6 +7,11 @@ from distutils.dir_util import copy_tree, remove_tree
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 
+# ZipFile stuff
+# import zipfile
+# with zipfile.ZipFile('training_dataset.zip', 'r') as zip_dset:
+#     zip_dset.extractall('.')
+
 # Data preprocessing - Here the main processing of data happens
 
 base_dir = "training_dataset/"
